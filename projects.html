@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoang Nam Dang</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-stone-950 text-stone-400">
+    
+    <div class="flex min-h-screen flex-col items-center p-4 md:p-12 relative z-10">
+        <div class="max-w-lg w-full pt-24 md:pt-32 mx-auto">
+      
+            <div class="flex items-center justify-between mb-12 relative">
+                <a href="index.html" class="text-xl sm:text-2xl md:text-3xl font-normal text-white cursor-pointer select-none">hi im hoang</a>
+                
+                <nav class="hidden md:flex gap-6 text-sm font-medium text-stone-400">
+                    <a href="projects.html" class="text-stone-100 font-medium cursor-pointer">projects</a>
+                    <a href="writings.html" class="hover:text-stone-100 transition-colors cursor-pointer">writing</a>
+                </nav>
+
+                <button id="menu-btn" class="md:hidden p-2 text-stone-400 hover:text-stone-100 transition-colors focus:outline-none" aria-label="Menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+
+                <div id="mobile-menu" class="hidden absolute right-0 top-12 w-32 rounded-md bg-stone-900 border border-stone-800 shadow-xl z-50 overflow-hidden">
+                    <div class="py-1">
+                        <a href="projects.html" class="block w-full text-left px-4 py-2 text-sm text-stone-400 hover:bg-stone-800 hover:text-stone-100 transition-colors">projects</a>
+                        <a href="writings.html" class="block w-full text-left px-4 py-2 text-sm text-stone-400 hover:bg-stone-800 hover:text-stone-100 transition-colors">writing</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-projects" class="fade-in">
+                <p class="mb-6 text-stone-100 text-xs md:text-sm font-medium w-fit border-b-2 border-stone-100 pb-1">Projects</p>
+                <p class="text-stone-400 text-sm">Project section coming soon...</p>
+            </div>
+
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

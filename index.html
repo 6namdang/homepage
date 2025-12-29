@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home i'm hoang</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-stone-950 text-stone-400">
+    
+    <div class="flex min-h-screen flex-col items-center p-4 md:p-12 relative z-10">
+        <div class="max-w-lg w-full pt-24 md:pt-32 mx-auto">
+      
+            <div class="flex items-center justify-between mb-12 relative">
+                <a href="index.html" class="text-xl sm:text-2xl md:text-3xl font-normal text-white cursor-pointer select-none">home</a>
+                
+                <nav class="hidden md:flex gap-6 text-sm font-medium text-stone-400">
+                    <a href="projects.html" class="hover:text-stone-100 transition-colors cursor-pointer">projects</a>
+                    <a href="writings.html" class="hover:text-stone-100 transition-colors cursor-pointer">writing</a>
+                </nav>
+
+                <button id="menu-btn" class="md:hidden p-2 text-stone-400 hover:text-stone-100 transition-colors focus:outline-none" aria-label="Menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+
+                <div id="mobile-menu" class="hidden absolute right-0 top-12 w-32 rounded-md bg-stone-900 border border-stone-800 shadow-xl z-50 overflow-hidden">
+                    <div class="py-1">
+                        <a href="projects.html" class="block w-full text-left px-4 py-2 text-sm text-stone-400 hover:bg-stone-800 hover:text-stone-100 transition-colors">projects</a>
+                        <a href="writings.html" class="block w-full text-left px-4 py-2 text-sm text-stone-400 hover:bg-stone-800 hover:text-stone-100 transition-colors">writing</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-home" class="fade-in">
+                <div>
+                    <p class="mb-2 text-stone-100 text-xs md:text-sm font-medium w-fit border-b-2 border-stone-100 pb-1">Currently</p>
+                    <ul class="text-xs md:text-sm text-stone-400 space-y-1">
+                        <li>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3 -mx-2 px-2 py-1 rounded-md transition-colors hover:bg-stone-800/80">
+                            <img alt="Lodging Connections" class="w-8 h-8 rounded" src="/stealth.jpeg">
+                            <div class="leading-tight text-xs md:text-sm">
+                                <div class="text-stone-100 font-medium">AI Automation</div>
+                                <div class="text-stone-400 group-hover:text-stone-100 transition-colors">Lodging Connections</div>
+                            </div>
+                        </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="h-auto min-h-[80px] md:min-h-[60px]">
+                    <div class="mt-4 space-y-3">
+                        <div>
+                        <p class="mb-2 text-stone-100 text-xs md:text-sm font-medium w-fit border-b-2 border-stone-100 pb-1">Previously</p>
+                        <ul class="text-xs md:text-sm text-stone-400 space-y-1">
+                                <li>
+                                    <a href="https://www.gannon.edu/" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3 -mx-2 px-2 py-1 rounded-md transition-colors hover:bg-stone-800/80">
+                                    <img alt="Gannon University" class="w-8 h-8 rounded" src="/gannon.jpeg">
+                                    <div class="leading-tight text-xs md:text-sm">
+                                    <div class="text-stone-100 font-medium">Computer Science (2021-2025)</div>
+                                    <div class="text-stone-400 group-hover:text-stone-100 transition-colors">Gannon University</div>
+                                </div>
+                                    </a>
+                            </li>
+
+                            <li>
+                                <a href="https://www.e3team.com" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3 -mx-2 px-2 py-1 rounded-md transition-colors hover:bg-stone-800/80">
+                                    <img alt="E3 Company" class="w-8 h-8 rounded" src="/e3company.jpeg">
+                                    <div class="leading-tight text-xs md:text-sm">
+                                    <div class="text-stone-100 font-medium">Software Engineer</div>
+                                    <div class="text-stone-400 group-hover:text-stone-100 transition-colors">E3 Company</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.linkedin.com/company/panhealth-inc./" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3 -mx-2 px-2 py-1 rounded-md transition-colors hover:bg-stone-800/80">
+                                    <img alt="PanHealth" class="w-8 h-8 rounded" src="/stealth.jpeg">
+                                    <div class="leading-tight text-xs md:text-sm">
+                                    <div class="text-stone-100 font-medium">SWE Intern</div>
+                                    <div class="text-stone-400 group-hover:text-stone-100 transition-colors">PanHealth Inc.</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3 -mx-2 px-2 py-1 rounded-md transition-colors hover:bg-stone-800/80">
+                                    <img alt="NetSec Lab" class="w-8 h-8 rounded" src="/gannon.jpeg">
+                                    <div class="leading-tight text-xs md:text-sm">
+                                    <div class="text-stone-100 font-medium">Research Assistant</div>
+                                    <div class="text-stone-400 group-hover:text-stone-100 transition-colors">Additive Manufacturing Lab</div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 pt-8 border-t border-stone-800">
+                    <p class="text-xs md:text-sm text-stone-400 leading-relaxed">
+                        to see what specific things i have done, please see the link down there to my old website, or you can click this but
+                    </p>
+                </div>
+
+                <div class="mt-12 flex flex-wrap items-center gap-3 text-xs text-stone-400 max-w-lg">
+                    <a href="mailto:dang004@gannon.edu" class="group flex h-8 w-8 items-center justify-center rounded-md bg-transparent text-stone-400 hover:bg-stone-800/80 hover:text-stone-100 transition-colors" aria-label="Email">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path></svg>
+                    </a>
+                    <a href="https://linkedin.com/in/dang004" target="_blank" rel="noopener noreferrer" class="group flex h-8 w-8 items-center justify-center rounded-md bg-transparent text-stone-400 hover:bg-stone-800/80 hover:text-stone-100 transition-colors" aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M19 3C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19ZM18.5 18.5V13.2C18.5 12.3354 18.1565 11.5062 17.5452 10.8948C16.9338 10.2835 16.1046 9.94 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17C14.6813 12.17 15.0374 12.3175 15.2999 12.5801C15.5625 12.8426 15.71 13.1987 15.71 13.57V18.5H18.5ZM6.88 8.56C7.32556 8.56 7.75288 8.383 8.06794 8.06794C8.383 7.75288 8.56 7.32556 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19C6.43178 5.19 6.00193 5.36805 5.68499 5.68499C5.36805 6.00193 5.19 6.43178 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56ZM8.27 18.5V10.13H5.5V18.5H8.27Z"></path></svg>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
