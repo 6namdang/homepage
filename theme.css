@@ -1,0 +1,84 @@
+/* theme.css */
+
+/* Target body and background */
+html.light-mode body {
+    background-color: #fafaf9 !important; /* Stone-50 */
+    color: #57534e !important;            /* Stone-600 */
+}
+
+/* Titles, bold text, and hovers */
+html.light-mode .text-white,
+html.light-mode .text-stone-100,
+html.light-mode .text-stone-200,
+html.light-mode .text-stone-300 {
+    color: #1c1917 !important;            /* Stone-900 */
+}
+
+/* Borders and dividers */
+html.light-mode .border-stone-800,
+html.light-mode .border-b,
+html.light-mode .border-t {
+    border-color: #e7e5e4 !important;     /* Stone-200 */
+}
+
+/* Mobile Menu Fix */
+html.light-mode #mobile-menu {
+    background-color: #ffffff !important;
+    border: 1px solid #e7e5e4 !important;
+}
+
+html.light-mode #mobile-menu a {
+    color: #57534e !important;
+}
+
+/* Fix icons color */
+html.light-mode svg {
+    color: #57534e !important;
+}
+
+/* Smooth transition */
+* { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+
+
+/* --- Blog Post & Markdown Content Fixes --- */
+
+/* Targets the container used in your script.js loadSinglePost function */
+html.light-mode .prose {
+    /* These variables control Tailwind's typography colors */
+    --tw-prose-body: #57534e !important;
+    --tw-prose-headings: #1c1917 !important;
+    --tw-prose-links: #1c1917 !important;
+    --tw-prose-bold: #1c1917 !important;
+    --tw-prose-counters: #78716c !important;
+    --tw-prose-bullets: #d6d3d1 !important;
+    --tw-prose-quotes: #78716c !important;
+    --tw-prose-code: #1c1917 !important;
+    --tw-prose-pre-bg: #f5f5f4 !important;
+    --tw-prose-pre-code: #292524 !important;
+    --tw-prose-hr: #e7e5e4 !important;
+}
+
+/* Specific overrides for headers inside the blog post */
+html.light-mode .prose h1, 
+html.light-mode .prose h2, 
+html.light-mode .prose h3 {
+    color: #1c1917 !important;
+}
+
+/* Fix for small code snippets inside sentences */
+html.light-mode .prose :not(pre) > code {
+    background-color: #e7e5e4 !important; /* Stone-200 */
+    color: #1c1917 !important;
+    padding: 0.2em 0.4em !important;
+    border-radius: 0.25rem !important;
+}
+
+/* Fix for large code blocks */
+html.light-mode .prose pre {
+    background-color: #f5f5f4 !important; /* Stone-100 */
+    border: 1px solid #e7e5e4 !important;
+}
+
+html.light-mode .prose pre code {
+    color: #292524 !important;
+}

@@ -1,15 +1,16 @@
 ---
-title: 'Top down v.s Bottom Up approach'
-date: 2022-07-01
-readTime: '2 min read'
-description: 'how to solve a stupid simple problem in 2 ways'
-author: 'Hoang Nam Dang'
-tags: [ "blogging", "growth"]
+title: Why I Write Code Slowly
+date: 2026-01-30
+readTime: 5 min read
+author: Hoang Nam Dang
+tags:
+  - writing
+  - javascript
+  - personal
+
 ---
 
-# Top Down Approach
-Suppose you have a program that takes input A, do some actions B and C, then produce the results D. You supposedly do not have any ideas why those components work, but somehow you manage to replicate the actions that it takes. For example, when I build REPL from scratch, I don't actually build it from scratch like understanding the keystrokes, the bus that connects my keyboard to the screen, how does bytes actually travels to 
 
+![Image](https://plus.unsplash.com/premium_photo-1666901328734-3c6eb9b6b979?q=80&w=2680&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
 
-## Bottom up approach
-Suppose you have all the pieces, and an extremely difficult problems. You don't know where to begins, but you surely can solve the problem by understanding the definition of it. For example, you need to intergrate this extremely difficult functions. Although you cannot solve it right away or break it down into probable chunks, you sure can begins with the basic foundation definition of what intergration is. Then, you try to continue to see whether 
+The reason why I like to write code slowly is to understand everything that is going on.

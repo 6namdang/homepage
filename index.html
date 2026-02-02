@@ -3,23 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home i'm hoang</title>
+    <title>Hoang</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="theme.css">
 </head>
 <body class="bg-stone-950 text-stone-400">
     
     <div class="flex min-h-screen flex-col items-center p-4 md:p-12 relative z-10">
-        <div class="max-w-lg w-full pt-24 md:pt-32 mx-auto">
+        <div class="max-w-2xl w-full pt-24 md:pt-32 mx-auto">
       
             <div class="flex items-center justify-between mb-12 relative">
                 <a href="index.html" class="text-xl sm:text-2xl md:text-3xl font-normal text-white cursor-pointer select-none">hoang's portfolio</a>
                 
+                <!---navbar-->
                 <nav class="hidden md:flex gap-6 text-sm font-medium text-stone-400">
                     <a href="projects.html" class="hover:text-stone-100 transition-colors cursor-pointer">projects</a>
                     <a href="writings.html" class="hover:text-stone-100 transition-colors cursor-pointer">writing</a>
                 </nav>
-
+                
+                <button id="theme-toggle" class="p-2 rounded-md hover:bg-stone-200 dark:hover:bg-stone-800 text-stone-500 dark:text-stone-400 transition-colors">
+                    <span id="theme-icon-dark" class="hidden">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2m-18.78 7.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                    </span>
+                    <span id="theme-icon-light">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+                    </span>
+                </button>
+                
                 <button id="menu-btn" class="md:hidden p-2 text-stone-400 hover:text-stone-100 transition-colors focus:outline-none" aria-label="Menu">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -28,20 +39,34 @@
                     </svg>
                 </button>
 
+                <!---mobile navbar-->
+
                 <div id="mobile-menu" class="hidden absolute right-0 top-12 w-32 rounded-md bg-stone-900 border border-stone-800 shadow-xl z-50 overflow-hidden">
                     <div class="py-1">
                         <a href="projects.html" class="block w-full text-left px-4 py-2 text-sm text-stone-400 hover:bg-stone-800 hover:text-stone-100 transition-colors">projects</a>
                         <a href="writings.html" class="block w-full text-left px-4 py-2 text-sm text-stone-400 hover:bg-stone-800 hover:text-stone-100 transition-colors">writing</a>
                     </div>
                 </div>
-            </div>
 
+                <!---introduction part-->
+            </div>
+                <div class="mb-10">
+                    <p class="text-sm md:text-base text-stone-400 leading-relaxed space-y-4">
+                        i'm a computer science student at gannon university and a software engineer interested in 
+                        <span class="text-stone-200">machine learning</span>, 
+                        <span class="text-stone-200">hci</span>, and 
+                        <span class="text-stone-200">backend systems</span>. 
+                        currently exploring how multimodal ai can support healthcare and neurodiversity.
+                    </p>
+                </div>
+
+<div class="border-b border-stone-800 mb-10"></div>
             <div id="view-home" class="fade-in">
                 <div>
                     <p class="mb-2 text-stone-100 text-xs md:text-sm font-medium w-fit border-b-2 border-stone-100 pb-1">Currently</p>
                     <ul class="text-xs md:text-sm text-stone-400 space-y-1">
                         <li>
-                        <a href="#" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3 -mx-2 px-2 py-1 rounded-md transition-colors hover:bg-stone-800/80">
+                        <a  target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3 -mx-2 px-2 py-1 rounded-md transition-colors hover:bg-stone-800/80">
                             <img alt="Lodging Connections LLC" class="w-8 h-8 rounded" src="stealth.jpeg">
                             <div class="leading-tight text-xs md:text-sm">
                                 <div class="text-stone-100 font-medium">AI Automation</div>
@@ -123,5 +148,6 @@
         </div>
     </div>
     <script src="script.js"></script>
+    <script src="theme.js"></script>
 </body>
 </html>
