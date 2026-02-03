@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>6namdang CMS</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: auto; }
+        .hidden { display: none; }
+        textarea { width: 100%; margin: 10px 0; font-family: monospace; }
+        #login-section { text-align: center; margin-top: 50px; }
+        input[type="password"] { padding: 8px; width: 300px; }
+        button { padding: 8px 16px; cursor: pointer; margin: 2px; }
+        .nav-btn { background-color: #f0f0f0; border: 1px solid #ccc; }
+        .controls { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+        select { padding: 5px; }
+    </style>
+</head>
+<body>
+
+    <h1>My Personal GitHub CMS</h1>
+
+    <div id="login-section">
+        <input type="password" id="pat-input" placeholder="Enter GitHub PAT">
+        <button id="login-btn">Login</button>
+        <br><br>
+        <button class="nav-btn" onclick="window.location.href='/index.html'">Back to Home</button>
+    </div>
+
+    <div id="cms-section" class="hidden">
+        <button id="logout-btn" style="float: right;">Logout</button>
+        
+        <div class="controls">
+            <div>
+                <label for="folder-select">Collection:</label>
+                <select id="folder-select">
+                    <option value="posts">Posts</option>
+                    <option value="projects">Projects</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="posts">File:</label>
+                <select id="posts"></select>
+            </div>
+        </div>
+
+        <textarea id="content" rows="20"></textarea>
+        <br>
+
+        <button id="load">Load File</button>
+        <button id="save">Save Changes</button>
+    </div>
+
+<script>
+    const owner = '6namdang';
+    const repo = '6namdang';
+
+    const loginSection = document.getElementById('login-section');
+    const cmsSection = document.getElementById('cms-section');
+    const patInput = document.getElementById('pat-input');
+    const folderSelect = document.getElementById('folder-select');
+    const postsSelect = document.getElementById('posts');
+    const contentArea = document.getElementById('content');
+
+    function forceLogout(msg) {
+        if (msg) alert(msg);
+        sessionStorage.clear();
+        window.location.href = '/index.html';
+    }
+
+    const getToken = () => sessionStorage.getItem('gh_pat');
+
+    // Fetches files based on the selected folder dropdown
+    async function listFiles() {
+        const token = getToken();
+        const selectedFolder = folderSelect.value;
+        try {
+            const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${selectedFolder}`, {
+                headers: { Authorization: `token ${token}` }
+            });
+
+            if (!res.ok) throw new Error('Unauthorized');
+
+            const data = await res.json();
+            postsSelect.innerHTML = ''; 
+            data.forEach(file => {
+                if(file.type === 'file') {
+                    const option = document.createElement('option');
+                    option.value = file.path;
+                    option.textContent = file.name;
+                    postsSelect.appendChild(option);
+                }
+            });
+
+            loginSection.classList.add('hidden');
+            cmsSection.classList.remove('hidden');
+        } catch (err) {
+            forceLogout('Session expired or access denied.');
+        }
+    }
+
+    // Refresh file list when folder changes
+    folderSelect.onchange = listFiles;
+
+    document.getElementById('login-btn').onclick = () => {
+        const val = patInput.value.trim();
+        if (val) {
+            sessionStorage.setItem('gh_pat', val);
+            listFiles();
+        }
+    };
+
+    document.getElementById('logout-btn').onclick = () => forceLogout();
+
+    document.getElementById('load').onclick = async function() {
+        const token = getToken();
+        try {
+            const path = postsSelect.value;
+            if (!path) return;
+
+            const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+                headers: { Authorization: `token ${token}` }
+            });
+            if (!res.ok) throw new Error('Load failed');
+
+            const data = await res.json();
+            contentArea.value = decodeURIComponent(escape(atob(data.content)));
+            window.currentSha = data.sha;
+            window.currentPath = path;
+        } catch (err) {
+            forceLogout('Error loading file. Returning home.');
+        }
+    };
+
+    document.getElementById('save').onclick = async function() {
+        const token = getToken();
+        try {
+            if (!window.currentPath || !window.currentSha) return alert('Load a file first!');
+
+            const content = contentArea.value;
+            const base64 = btoa(unescape(encodeURIComponent(content)));
+
+            const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${window.currentPath}`, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `token ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: `CMS Update: ${window.currentPath}`,
+                    content: base64,
+                    sha: window.currentSha
+                })
+            });
+
+            if (!res.ok) throw new Error('Save failed');
+
+            const data = await res.json();
+            alert('Saved successfully!');
+            window.currentSha = data.content.sha;
+        } catch (err) {
+            forceLogout('Critical save error. Returning home.');
+        }
+    };
+
+    if (getToken()) {
+        listFiles();
+    }
+</script>
+</body>
+</html>

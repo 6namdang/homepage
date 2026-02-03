@@ -1,7 +1,34 @@
-// CONFIGURATION: Add your markdown files here
-const blogFiles = [
-    "first-blog.md",
-];
+const blogSettings = {
+    username: "6namdang", // Update this
+    repo: "6namdang",           // Update this
+    folder: "posts",                  // The folder containing your .md files
+    branch: "main"                    // Usually 'main' or 'master'
+};
+
+/**
+ * Utility: Fetch file list from GitHub
+ */
+async function getBlogFiles() {
+    const apiUrl = `https://api.github.com/repos/${blogSettings.username}/${blogSettings.repo}/contents/${blogSettings.folder}?ref=${blogSettings.branch}`;
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error("GitHub API unreachable");
+        const data = await response.json();
+        return data
+            .filter(item => item.name.endsWith('.md'))
+            .map(item => item.name);
+    } catch (e) {
+        console.error("Error fetching blog list:", e);
+        return [];
+    }
+}
+
+/**
+ * Utility: Get raw content URL
+ */
+function getRawUrl(filename) {
+    return `https://raw.githubusercontent.com/${blogSettings.username}/${blogSettings.repo}/${blogSettings.branch}/${blogSettings.folder}/${filename}`;
+}
 
 // --- PARSER ENGINE ---
 function parseFrontmatter(text) {
@@ -96,21 +123,35 @@ async function loadBlogList() {
 
     if (listView) listView.classList.remove('hidden');
     if (detailContainer) detailContainer.classList.add('hidden');
+    if (listContainer) listContainer.innerHTML = '<p class="text-stone-600 text-sm italic">Fetching posts...</p>';
 
+    // AUTO-DISCOVERY INSTEAD OF HARDCODED ARRAY
+    const files = await getBlogFiles();
     const posts = [];
-    for (const file of blogFiles) {
+
+    // Parallel fetch for speed
+    const fetchPromises = files.map(async (file) => {
         try {
-            const res = await fetch(`./posts/${file}`);
+            const res = await fetch(getRawUrl(file));
             if (res.ok) {
                 const text = await res.text();
                 const { metadata } = parseFrontmatter(text);
-                posts.push({ ...metadata, filename: file });
+                return { ...metadata, filename: file };
             }
         } catch (e) { console.error("Error loading file:", file, e); }
-    }
+        return null;
+    });
+
+    const results = await Promise.all(fetchPromises);
+    const validPosts = results.filter(p => p !== null);
 
     if (listContainer) {
-        listContainer.innerHTML = posts.map(post => {
+        if (validPosts.length === 0) {
+            listContainer.innerHTML = '<p class="text-stone-600 text-sm">No posts found.</p>';
+            return;
+        }
+
+        listContainer.innerHTML = validPosts.map(post => {
             const tagsHtml = (post.tags && Array.isArray(post.tags)) 
                 ? `<div class="flex flex-wrap gap-2 mt-2">
                     ${post.tags.map(tag => `<span class="text-[10px] uppercase tracking-widest text-stone-200 border border-stone-800 px-1.5 py-0.5 rounded">${tag}</span>`).join('')}
@@ -122,9 +163,9 @@ async function loadBlogList() {
                     <div class="pr-4">
                         <h3 class="text-sm md:text-base font-medium text-stone-300 group-hover:text-stone-100 transition-colors">${post.title}</h3>
                         ${tagsHtml}
-                        <p class="text-xs text-stone-500 mt-2">${post.readTime}</p>
+                        <p class="text-xs text-stone-500 mt-2">${post.readTime || ''}</p>
                     </div>
-                    <span class="text-xs text-stone-600 shrink-0 font-mono">${post.date}</span>
+                    <span class="text-xs text-stone-600 shrink-0 font-mono">${post.date || ''}</span>
                 </a>
             `;
         }).join('');
@@ -133,14 +174,13 @@ async function loadBlogList() {
 
 async function loadSinglePost(filename) {
     const detailContainer = document.getElementById('view-blog-detail');
-    // Targets any of the list views you might be using
     const listViews = [document.getElementById('view-home'), document.getElementById('view-projects'), document.getElementById('view-writing')];
 
     listViews.forEach(view => { if (view) view.classList.add('hidden'); });
     if (detailContainer) detailContainer.classList.remove('hidden');
 
     try {
-        const res = await fetch(`posts/${filename}`);
+        const res = await fetch(getRawUrl(filename));
         if (!res.ok) throw new Error("Post not found");
         const text = await res.text();
         const { metadata, content } = parseFrontmatter(text);

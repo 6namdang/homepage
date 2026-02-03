@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GitHub OAuth Callback</title>
+</head>
+<body>
+  <h1>GitHub Callback</h1>
+  <script>
+    // Get code from URL
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    
+    // Print it
+    document.body.innerHTML += `<p>Code from GitHub: ${code}</p>`;
+    console.log('GitHub code:', code);
+  </script>
+</body>
+</html>
