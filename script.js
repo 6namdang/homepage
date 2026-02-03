@@ -106,7 +106,7 @@ async function loadBlogList() {
     const posts = [];
     for (const file of blogFiles) {
         try {
-            const res = await fetch(`./posts/${file}`);
+            const res = await fetch(`posts/${file}`);
             if (res.ok) {
                 const text = await res.text();
                 const { metadata } = parseFrontmatter(text);
