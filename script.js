@@ -119,17 +119,19 @@ async function init() {
 async function loadBlogList() {
     const listContainer = document.getElementById('blog-list-container');
     const detailContainer = document.getElementById('view-blog-detail');
-    const listView = document.getElementById('view-home') || document.getElementById('view-projects') || document.getElementById('view-writing');
+    const listView = document.getElementById('view-writing');
 
     if (listView) listView.classList.remove('hidden');
     if (detailContainer) detailContainer.classList.add('hidden');
+    
+    // Clear the "Writing" header in HTML if you want the tags to be the primary headers
+    const writingHeader = document.querySelector('#view-writing p');
+    if (writingHeader) writingHeader.style.display = 'none';
+
     if (listContainer) listContainer.innerHTML = '<p class="text-stone-600 text-sm italic">Fetching posts...</p>';
 
-    // AUTO-DISCOVERY INSTEAD OF HARDCODED ARRAY
     const files = await getBlogFiles();
-    const posts = [];
-
-    // Parallel fetch for speed
+    
     const fetchPromises = files.map(async (file) => {
         try {
             const res = await fetch(getRawUrl(file));
@@ -151,27 +153,51 @@ async function loadBlogList() {
             return;
         }
 
-        listContainer.innerHTML = validPosts.map(post => {
-            const tagsHtml = (post.tags && Array.isArray(post.tags)) 
-                ? `<div class="flex flex-wrap gap-2 mt-2">
-                    ${post.tags.map(tag => `<span class="text-[10px] uppercase tracking-widest text-stone-200 border border-stone-800 px-1.5 py-0.5 rounded">${tag}</span>`).join('')}
-                   </div>` 
-                : '';
+        // 1. Group posts by ONLY the first tag
+        const groupedPosts = {};
 
-            return `
-                <a href="?post=${post.filename}" class="group cursor-pointer flex items-baseline justify-between py-5 border-b border-stone-800 hover:border-stone-700 transition-colors">
-                    <div class="pr-4">
-                        <h3 class="text-sm md:text-base font-medium text-stone-300 group-hover:text-stone-100 transition-colors">${post.title}</h3>
-                        ${tagsHtml}
-                        <p class="text-xs text-stone-500 mt-2">${post.readTime || ''}</p>
+        validPosts.forEach(post => {
+            // Take only the first tag, or default to 'general'
+            const firstTag = (post.tags && Array.isArray(post.tags) && post.tags.length > 0) 
+                ? post.tags[0].toLowerCase() 
+                : 'general';
+            
+            if (!groupedPosts[firstTag]) {
+                groupedPosts[firstTag] = [];
+            }
+            groupedPosts[firstTag].push(post);
+        });
+
+        // 2. Generate HTML
+        let finalHtml = '';
+
+        // Sort tags alphabetically if you want order, or leave as is
+        const sortedTags = Object.keys(groupedPosts).sort();
+
+        sortedTags.forEach(tag => {
+            finalHtml += `
+                <div class="mb-16">
+                    <h2 class="text-stone-100 text-xs md:text-sm font-medium w-fit border-b-2 border-stone-100 pb-1 mb-6 uppercase tracking-widest">
+                        ${tag}
+                    </h2>
+                    <div class="flex flex-col">
+                        ${groupedPosts[tag].map(post => `
+                            <a href="?post=${post.filename}" class="group cursor-pointer flex items-baseline justify-between py-5 border-b border-stone-900/50 hover:border-stone-700 transition-colors">
+                                <div class="pr-4">
+                                    <h3 class="text-sm md:text-base font-medium text-stone-300 group-hover:text-stone-100 transition-colors">${post.title}</h3>
+                                    <p class="text-[10px] text-stone-600 mt-1 uppercase font-mono">${post.readTime || ''}</p>
+                                </div>
+                                <span class="text-xs text-stone-600 shrink-0 font-mono">${post.date || ''}</span>
+                            </a>
+                        `).join('')}
                     </div>
-                    <span class="text-xs text-stone-600 shrink-0 font-mono">${post.date || ''}</span>
-                </a>
+                </div>
             `;
-        }).join('');
+        });
+
+        listContainer.innerHTML = finalHtml;
     }
 }
-
 async function loadSinglePost(filename) {
     const detailContainer = document.getElementById('view-blog-detail');
     const listViews = [document.getElementById('view-home'), document.getElementById('view-projects'), document.getElementById('view-writing')];
